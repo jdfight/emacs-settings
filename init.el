@@ -1,6 +1,7 @@
 (setq inhibit-startup-screen t)
 
 (require 'package) ;; You might already have this line
+
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 (when (< emacs-major-version 24)
@@ -25,7 +26,17 @@
  ;; If there is more than one, they won't work right.
  )
 
- 
+;; Install extensions if they're missing
+(defun init--install-packages ()
+  (package-install-selected-packages))
+
+ (condition-case nil
+    (init--install-packages)
+  (error
+   (package-refresh-contents)
+   (init--install-packages)))
+
+
 (require 'yasnippet)
 (yas-global-mode 1)
 
