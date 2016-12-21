@@ -1,5 +1,10 @@
 (setq inhibit-startup-screen t)
 
+;; Put autosave files (ie #foo#) and backup files (ie foo~) in ~/.emacs.d/.
+;; create the autosave dir if necessary, since emacs won't.
+(make-directory "~/.emacs.d/autosaves/" t)
+(make-directory "~/.emacs.d/backups/" t)
+
 (require 'package) ;; You might already have this line
 
 (add-to-list 'package-archives
@@ -26,17 +31,17 @@
  ;; If there is more than one, they won't work right.
  )
 
-;; Install extensions if they're missing
-(defun init--install-packages ()
-  (package-install-selected-packages))
+; fetch the list of packages available 
+(unless package-archive-contents
+  (package-refresh-contents))
 
- (condition-case nil
-    (init--install-packages)
-  (error
-   (package-refresh-contents)
-   (init--install-packages)))
+; install the missing packages
+(dolist (package package-selected-packages)
+  (unless (package-installed-p package)
+    (package-install package)))
 
 
+;;YASnippet
 (require 'yasnippet)
 (yas-global-mode 1)
 
