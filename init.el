@@ -23,7 +23,7 @@
  '(custom-enabled-themes (quote (wombat)))
  '(package-selected-packages
    (quote
-    (magit helm-cider helm-projectile cljr-helm cljsbuild-mode clojure-snippets helm clj-refactor yasnippet paredit cider clojure-mode restclient projectile neotree markdown-mode+ auto-complete))))
+    (magit helm-cider helm-projectile cljr-helm cljsbuild-mode clojure-snippets helm clj-refactor yasnippet paredit cider clojure-mode restclient projectile neotree markdown-mode+ auto-complete multiple-cursors))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -96,3 +96,14 @@
 (global-set-key (kbd "C-x C-f") #'helm-find-files)
 
 (helm-mode 1)
+
+
+;; multiple-cursors
+(require 'multiple-cursors)
+
+(global-set-key (kbd "C-c m c")) 'mc/edit-lines
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+(server-start)
